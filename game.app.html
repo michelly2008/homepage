@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jogo da Cobrinha</title>
+<style>
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+  }
+  canvas {
+    border: 1px solid #000;
+  }
+</style>
+</head>
+<body>
+<canvas id="gameCanvas" width="400" height="400"></canvas>
+<script>
+  const canvas = document.getElementById("gameCanvas");
+  const ctx = canvas.getContext("2d");
+
+  const gridSize = 20;
+  let snake = [{ x: 5, y: 5 }];
+  let apple = { x: 15, y: 15 };
+  let direction = "right";
+  let applesEaten = 0;
+  let currentLevel = 1;
+  let applesToNextLevel = 5;
+  let gameTime = 240; // 4 minutes in seconds
+
+  function drawSnake() {
+    ctx.fillStyle = "#00aaff";
+    snake.forEach(segment => {
+      ctx.fillRect(segment.x * gridSize, segment.y * gridSize, gridSize, gridSize);
+    });
+  }
+
+  function drawApple() {
+    ctx.fillStyle = "#ff0000";
+    ctx.fillRect(apple.x * gridSize, apple.y * gridSize, gridSize, gridSize);
+  }
+
+  function clearCanvas() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+
+  function updateGame() {
+    clearCanvas();
+
+    if (direction === "right") snake[0].x++;
+    else if (direction === "left") snake[0].x--;
+    else if (direction === "down") snake[0].y++;
+    else if (direction === "up") snake[0].y--;
+
+    if (snake[0].x === apple.x && snake[0].y === apple.y) {
+      applesEaten++;
+      if (applesEaten === applesToNextLevel) {
+        currentLevel++;
+        applesToNextLevel *= 2;
+        applesEaten = 0;
+        gameTime -= 30; // Decrease time by 30 seconds for added challenge
+      }
+      snake.push({});
+      generateApple();
+    }
+
+    if (snake[0].x >= canvas.width / gridSize || snake[0].x < 0 ||
+        snake[0].y >= canvas.height / gridSize || snake[0].y < 0 ||
+        checkCollision()) {
+      clearInterval(gameLoop);
+      alert("Game Over! Your score: " + (currentLevel - 1));
+      location.reload();
+    }
+
+    drawSnake();
+    drawApple();
+  }
+
+  function checkCollision() {
+    for (let i = 1; i < snake.length; i++) {
+      if (snake[i].x === snake[0].x && snake[i].y === snake[0].y) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  function generateApple() {
+    apple = {
+      x: Math.floor(Math.random() * (canvas.width / gridSize)),
+      y: Math.floor(Math.random() * (canvas.height / gridSize))
+    };
+  }
+
+  function handleKeydown(event) {
+    const key = event.key;
+    if ((key === "ArrowUp" || key === "w") && direction !== "down") direction = "up";
+    else if ((key === "ArrowDown" || key === "s") && direction !== "up") direction = "down";
+    else if ((key === "ArrowLeft" || key === "a") && direction !== "right") direction = "left";
+    else if ((key === "ArrowRight" || key === "d") && direction !== "left") direction = "right";
+  }
+
+  generateApple();
+  const gameLoop = setInterval(updateGame, gameTime * 1000);
+  document.addEventListener("keydown", handleKeydown);
+</script>
+</body>
+</html>
