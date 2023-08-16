@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfólio de Michelly</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f0f8ff; /* Azul claro */
+    }
+    header {
+      text-align: center;
+      padding: 20px;
+      background-color: #ffd700; /* Amarelo */
+    }
+    main {
+      padding: 20px;
+      background-color: #f0e68c; /* Amarelo claro */
+      border: 2px solid #ffd700; /* Borda amarela */
+      margin: 20px;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      padding: 0;
+      margin-top: 10px;
+    }
+    nav ul li {
+      margin: 0 20px;
+    }
+    nav ul li a {
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+    nav ul li a:hover {
+      color: #ff1493; /* Rosa */
+    }
+    section {
+      padding: 20px;
+      margin: 20px 0;
+      border: 1px solid #333; /* Borda preta */
+      background-color: #fff; /* Branco */
+    }
+    footer {
+      text-align: center;
+      padding: 10px;
+      background-color: #333;
+      color: #fff;
+      margin-top: 20px;
+    }
+    .navigation {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .navigation button {
+      background-color: #333;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      margin: 0 10px;
+      cursor: pointer;
+    }
+
+  </style>
+</head>
+<body>
+  <header>
+    <h1 style="color: #008000;">Michelly</h1> <!-- Verde -->
+    <h2>Portfólio</h2>
+  </header>
+  <main>
+    <nav>
+      <ul>
+        <li><a href="#sobre">Sobre Mim</a></li>
+        <li><a href="#videos">Meus Vídeos</a></li>
+      </ul>
+    </nav>
+    <section id="sobre">
+      <h2>Sobre Mim</h2>
+      <p>Olá! Meu nome é Michelly e tenho 14 anos. Moro no Paraná e adoro criar vídeos no Instagram.</p>
+      <p>Você pode me encontrar no Instagram <a href="https://instagram.com/michelly_jx" style="color: #ff69b4;">aqui</a>.</p>
+    </section>
+    <section id="videos">
+      <h2>Meus Vídeos</h2>
+      <video controls width="400">
+        <source src="videos/video01.mp4" type="video/mp4">
+        Desculpe, seu navegador não suporta a reprodução de vídeos.
+      </video>
+    
+      <video controls width="400">
+        <source src="videos/video02.mp4" type="video/mp4">
+        Desculpe, seu navegador não suporta a reprodução de vídeos.
+      </video>
+    
+</section>
+
+
+
+         
+  <div class="navigation">
+    <button id="prevBtn">Anterior</button>
+    <button id="nextBtn">Próximo</button>
+  </div>
+  
+
+      <!-- Adicione os links ou incorporações dos seus vídeos aqui -->
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2023 Michelly. Todos os direitos reservados.</p>
+    <p>Siga-me no Instagram: <a href="https://instagram.com/michelly_jx" style="color: #ff69b4;">@michelly_jx</a></p>
+  </footer>
+</body>
+<script>
+
+let nomeUsuario;
+    
+    while (!nomeUsuario) {
+      nomeUsuario = prompt("Digite seu nome:");
+    }
+
+    window.alert(`Bem-vindo, ${nomeUsuario}!`);
+
+
+    const videoGallery = document.querySelector('.video-gallery');
+    const videoContainers = document.querySelectorAll('.video-container');
+    const videoWidth = videoContainers[0].offsetWidth;
+    let currentIndex = 0;
+
+    function navigate(direction) {
+      currentIndex += direction;
+      if (currentIndex < 0) {
+        currentIndex = videoContainers.length - 1;
+      } else if (currentIndex >= videoContainers.length) {
+        currentIndex = 0;
+      }
+
+      videoGallery.style.transform = `translateX(-${currentIndex * videoWidth}px)`;
+    }
+
+    document.getElementById('prevBtn').addEventListener('click', () => navigate(-1));
+    document.getElementById('nextBtn').addEventListener('click', () => navigate(1));
+
+    let curtidas = 0;
+    const curtirBtn = document.getElementById('curtirBtn');
+    const contadorCurtidas = document.getElementById('contadorCurtidas');
+
+    curtirBtn.addEventListener('click', () => {
+      curtidas++;
+      contadorCurtidas.textContent = curtidas === 1 ? '1 curtida' : `${curtidas} curtidas`;
+    });
+
+    const comentarioInput = document.getElementById('comentario');
+    const comentarBtn = document.getElementById('comentarBtn');
+    const listaComentarios = document.getElementById('listaComentarios');
+
+    comentarBtn.addEventListener('click', () => {
+      const comentario = comentarioInput.value;
+      if (comentario) {
+        const nomeUsuario = prompt('Digite seu nome:');
+        if (nomeUsuario) {
+          const comentarioItem = document.createElement('li');
+          comentarioItem.textContent = `${nomeUsuario}: ${comentario}`;
+          listaComentarios.appendChild(comentarioItem);
+          comentarioInput.value = '';
+        }
+      }
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+</html>
