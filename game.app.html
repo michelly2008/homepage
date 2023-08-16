@@ -147,6 +147,24 @@
   generateApple();
   const gameLoop = setInterval(updateGame, gameTime * 1000);
   document.addEventListener("keydown", handleKeydown);
+
+    function startGame() {
+    snake = [{ x: 5, y: 5 }];
+    direction = "right";
+    applesEaten = 0;
+    currentLevel = 1;
+    applesToNextLevel = 5;
+    gameTime = 240;
+    generateApple();
+    const gameLoop = setInterval(updateGame, gameTime * 1000);
+    document.addEventListener("keydown", handleKeydown);
+  }
+
+  snakeImage.onload = () => {
+    appleImage.onload = () => {
+      startGame();
+    };
+  };
 </script>
 </body>
 </html>
