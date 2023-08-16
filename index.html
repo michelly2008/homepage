@@ -116,6 +116,11 @@
   <div class="navigation">
     <button id="prevBtn">Anterior</button>
     <button id="nextBtn">Próximo</button>
+<button id="buttonLeft">Mover para a Esquerda</button>
+<button id="buttonRight">Mover para a Direita</button>
+<input type="text" id="inputField" placeholder="Campo de Entrada">
+
+    
   </div>
   
 
@@ -180,6 +185,24 @@ let nomeUsuario;
           listaComentarios.appendChild(comentarioItem);
           comentarioInput.value = '';
         }
+        document.addEventListener('DOMContentLoaded', function() {
+    const buttonLeft = document.getElementById('buttonLeft');
+    const buttonRight = document.getElementById('buttonRight');
+    const inputField = document.getElementById('inputField');
+    
+    buttonLeft.addEventListener('click', function() {
+        inputField.focus();  // Move o cursor para o campo de entrada
+    });
+    
+    buttonRight.addEventListener('click', function() {
+        // Move o cursor para o próximo elemento interativo à direita (pode variar dependendo do caso)
+        const nextElement = inputField.nextElementSibling;
+        if (nextElement) {
+            nextElement.focus();
+        }
+    });
+});
+
       }
     });
   </script>
